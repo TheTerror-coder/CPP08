@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:51:53 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/07 13:12:56 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/11 18:29:55 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ int	main(void)
 		it = easyfind(v, 5);
 		if (it != v.end())
 			std::cout << "value: " << *it << std::endl;
+		else
+			std::cout << "value not found" << std::endl;
 		it = easyfind(v, 56);
 		if (it != v.end())
 			std::cout << "value: " << *it << std::endl;
+		else
+			std::cout << "value not found" << std::endl;
 		std::cout << "--------------------------------------------------------------------------" << std::endl;
 	}
 	{
@@ -59,9 +63,13 @@ int	main(void)
 		it = easyfind(lst, -2147483647);
 		if (it != lst.end())
 			std::cout << "value: " << *it << std::endl;
+		else
+			std::cout << "value not found" << std::endl;
 		it = easyfind(lst, 2147483655);
 		if (it != lst.end())
 			std::cout << "value: " << *it << std::endl;
+		else
+			std::cout << "value not found" << std::endl;
 		std::cout << "--------------------------------------------------------------------------" << std::endl;
 	}
 	return (0);
