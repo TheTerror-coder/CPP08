@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 10:51:53 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/07 19:28:47 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 16:07:27 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,24 @@ int	main(void)
 	{
 		std::cout << "--------------------------------------------------------------" << std::endl;
 		Span 				sp = Span(200000);
-		std::vector<int>	range;
+		std::set<int>	range;
 
-		// srand(std::time(NULL));
-		for (size_t i = 0; i < 100000; i++)
-			range.push_back(rand());
+		srand(std::time(NULL));
+		for (size_t i = 0; i < 300; i++)
+			range.insert(rand());
 		try
 		{
 			sp.addRange(range.begin(), range.end());
-			// sp.addNumber(10);
-			// sp.addNumber(10);
+			sp.addNumber(2147483647);
+			sp.addNumber(-2147483648);
 			// sp.displayStore();
-			std::cout << sp.shortestSpan() << std::endl;
-			std::cout << sp.longestSpan() << std::endl;
 		}
 		catch(const std::exception& e)
 		{
 			std::cerr << e.what() << '\n';
 		}
+		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.longestSpan() << std::endl;
 		std::cout << "--------------------------------------------------------------" << std::endl;
 	}
 	return (0);

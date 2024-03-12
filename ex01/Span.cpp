@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:31:11 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/07 19:16:32 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 15:59:01 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ Span::Span() : n(0), available(0)
 {
 }
 
-Span::Span(unsigned int n) : n(n), available(n)
+Span::Span(const unsigned& n) : n(n), available(n)
 {
 }
 
@@ -27,6 +27,8 @@ Span::Span(const Span& other) : n(other.n), available(other.available)
 
 Span&	Span::operator= (const Span& other)
 {
+	if (this == &other)
+		return (*this);
 	this->n = other.n;
 	this->available = other.available;
 	copyStore(other.store, this->store);
@@ -39,43 +41,13 @@ Span::~Span()
 
 void				Span::addNumber(int nbr)
 {
-	if (available)
+	if (this->available > 0 && this->available <= this->n)
 	{
 		this->store.insert(nbr);
 		available--;
 	}
 	else
 		throw (Span::FullStoreException());
-}
-
-void				Span::addRange(std::vector<int>::iterator itbegin, std::vector<int>::iterator itend)
-{
-	while (itbegin != itend)
-	{
-		if (available)
-		{
-			this->store.insert(*itbegin);
-			available--;
-		}
-		else
-			throw (Span::FullStoreException());
-		itbegin++;
-	}
-}
-
-void				Span::addRange(std::list<int>::iterator itbegin, std::list<int>::iterator itend)
-{
-	while (itbegin != itend)
-	{
-		if (available)
-		{
-			this->store.insert(*itbegin);
-			available--;
-		}
-		else
-			throw (Span::FullStoreException());
-		itbegin++;
-	}
 }
 
 void				Span::displayStore(void)
@@ -87,9 +59,9 @@ void				Span::displayStore(void)
 
 unsigned int		Span::shortestSpan(void)
 {
-	unsigned int	shortest;
-	int	one;
-	int	next;
+	int				one;
+	int				next;
+	unsigned		shortest;
 
 	shortest = std::numeric_limits<unsigned int>::max();
 	if (this->store.empty())
@@ -98,13 +70,13 @@ unsigned int		Span::shortestSpan(void)
 		throw (Span::OnlyOneNumberStoredException());
 	for (std::multiset<int>::iterator it = this->store.begin(); it != this->store.end(); it = it)
 	{
-		one = absoluteValue(*it);
+		one = *it;
 		it++;
 		if (it != this->store.end())
 		{
-			next = absoluteValue(*it);
-			if (absoluteValue(next - one) < shortest)
-				shortest = absoluteValue(next - one);
+			next = *it;
+			if ((unsigned) (std::abs(next) - std::abs(one)) < shortest)
+				shortest = std::abs(next) - std::abs(one);
 		}
 		if (!shortest)
 			return (shortest);
@@ -114,16 +86,11 @@ unsigned int		Span::shortestSpan(void)
 
 unsigned int		Span::longestSpan(void)
 {
-	int	first;
-	int	last;
-
 	if (this->store.empty())
 		throw (Span::NoNumbersStoredException());
 	if (this->store.size() == 1)
 		throw (Span::OnlyOneNumberStoredException());
-	first = absoluteValue(*this->store.begin());
-	last = absoluteValue(*(--this->store.end()));
-	return (last - first);
+	return (std::abs(*(--this->store.end())) - std::abs(*this->store.begin()));
 }
 
 const char*		Span::FullStoreException::what() const throw()
@@ -147,10 +114,4 @@ void			Span::copyStore(const std::multiset<int>& from, std::multiset<int>& to)
 		return ;
 	for (std::multiset<int>::const_iterator itFrom = from.begin(); itFrom != from.end(); itFrom++)
 		to.insert(*itFrom);
-}
-unsigned int	Span::absoluteValue(int nbr)
-{
-	if (nbr < 0)
-		return (nbr * -1);
-	return (nbr);
 }

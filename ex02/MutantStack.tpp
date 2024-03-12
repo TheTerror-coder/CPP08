@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 15:40:56 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/18 19:52:00 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 16:26:21 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ MutantStack<T>::MutantStack(const MutantStack& other) : std::stack<T>(other)
 template <typename T>
 MutantStack<T>&		MutantStack<T>::operator= (const MutantStack& other)
 {
+	if (this == &other)
+		return (*this);
 	return (*this);
 }
 
@@ -54,6 +56,8 @@ MutantStack<T>::iterator::iterator(const iterator& other) : ptr(other.ptr)
 template <typename T>
 typename MutantStack<T>::iterator&	MutantStack<T>::iterator::operator= (const iterator& other)
 {
+	if (this == &other)
+		return (*this);
 	this->ptr = other.ptr;
 	return (*this);
 }
@@ -70,12 +74,6 @@ T&										MutantStack<T>::iterator::operator* () const
 {
 	return (*(this->ptr));
 }
-
-// template <typename T>
-// T*							MutantStack<T>::iterator::operator-> () const
-// {
-// 	return (*(this->ptr));
-// }
 
 template <typename T>
 T&										MutantStack<T>::iterator::operator[] (std::ptrdiff_t n) const

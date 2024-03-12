@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 13:14:32 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/07 19:16:27 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 15:58:34 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define	SPAN_HPP
 
 # include <iostream>
+# include <algorithm>
+# include <iterator>
 # include <set>
 # include <vector>
 # include <list>
@@ -24,17 +26,17 @@ class Span
 {
 	public:
 	
-		Span(unsigned int n);
+		Span(const unsigned& n);
 		Span(const Span& other);
 		Span&	operator= (const Span& other);
 		~Span();
 
 		void				addNumber(int nbr);
-		void				addRange(std::vector<int>::iterator itbegin, std::vector<int>::iterator itend);
-		void				addRange(std::list<int>::iterator itbegin, std::list<int>::iterator itend);
 		void				displayStore(void);
 		unsigned int		shortestSpan(void);
 		unsigned int		longestSpan(void);
+		template <class T_iterator>
+		void				addRange(T_iterator itbegin, T_iterator itend);
 
 		class	FullStoreException : public std::exception
 		{
@@ -61,10 +63,22 @@ class Span
 		std::multiset<int>	store;
 
 		void				copyStore(const std::multiset<int>& from, std::multiset<int>& to);
-		unsigned int		absoluteValue(int nbr);
 };
 
-
-
+template <typename T_iterator>
+void				Span::addRange(T_iterator itbegin, T_iterator itend)
+{
+	while (itbegin != itend)
+	{
+		if (this->available > 0 && this->available <= this->n)
+		{
+			this->store.insert(*itbegin);
+			available--;
+		}
+		else
+			throw (Span::FullStoreException());
+		itbegin++;
+	}
+}
 
 #endif

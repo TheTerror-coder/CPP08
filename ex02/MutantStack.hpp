@@ -6,7 +6,7 @@
 /*   By: TheTerror <jfaye@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 19:48:17 by TheTerror         #+#    #+#             */
-/*   Updated: 2024/02/18 20:04:18 by TheTerror        ###   ########lyon.fr   */
+/*   Updated: 2024/03/12 18:00:10 by TheTerror        ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <cstddef>
 # include <iostream>
+# include <algorithm>
 # include <stack>
 # include <iterator>
 
@@ -47,7 +48,6 @@ class MutantStack : public std::stack<T>
 			
 				
 				T&					operator* () const;
-				// T*					operator-> () const;
 				T&					operator[] (std::ptrdiff_t n) const;
 				
 				iterator&			operator++ ();
@@ -67,6 +67,7 @@ class MutantStack : public std::stack<T>
 				bool				operator> (const iterator& rhs);
 				bool				operator<= (const iterator& rhs);
 				bool				operator>= (const iterator& rhs);
+				
 			private :
 
 				T*	ptr;
